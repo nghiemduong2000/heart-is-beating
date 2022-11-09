@@ -279,31 +279,6 @@ const ParticlePool = (function() {
     particlesOuter.draw(contextOuter, image());
   }
 
-  function render3() {
-    // next animation frame
-    requestAnimationFrame(render3);
-  
-    // update time
-    var newTime   = new Date().getTime() / 1000,
-        deltaTime = newTime - (time || newTime);
-    time = newTime;
-  
-    // clear canvas
-    contextOuter.clearRect(0, 0, canvas.width, canvas.height);
-  
-    // create new particles
-    var amount = particleRate * deltaTime;
-    for (var i = 0; i < amount; i++) {
-      var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
-      var dir = pos.clone().length(settings.particles.velocity);
-      particlesOuter.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y, settings.particles.effect4);
-    }
-  
-    // update and draw particles
-    particlesOuter.update(deltaTime);
-    particlesOuter.draw(contextOuter, image());
-  }
-
   // handle (re-)sizing of the canvas
   function onResize() {
     canvas.width  = canvas.clientWidth;
