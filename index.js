@@ -2,7 +2,7 @@
 
 var settings = {
   particles: {
-    length: 12000, // maximum amount of particles
+    length: 6000, // maximum amount of particles
     duration: 5, // particle duration in sec
     velocity: 120, // particle velocity in pixels/sec
     effect1: -1.2, // play with this for a nice effect
@@ -317,6 +317,5 @@ const ParticlePool = (function() {
     render();
     render1();
     render2();
-    render3();
   }, 100);
 })(document.getElementById('pinkboard'));
