@@ -1,15 +1,16 @@
 "use strict";
 
+let stopHeart = false;
+
 var settings = {
   particles: {
     length: 6000, // maximum amount of particles
-    duration: 5, // particle duration in sec
-    velocity: 120, // particle velocity in pixels/sec
+    duration: 4, // particle duration in sec
+    velocity: 150, // particle velocity in pixels/sec
     effect1: -1.2, // play with this for a nice effect
     effect2: -0.6, // play with this for a nice effect
     effect3: -0.35, // play with this for a nice effect
-    effect4: -0.25, // play with this for a nice effect
-    size: 14, // particle size in pixels
+    size: 13, // particle size in pixels
   },
 };
 /*
@@ -105,7 +106,7 @@ const ParticlePool = (function() {
     // handle circular queue
     firstFree++;
     if (firstFree   == particles.length) firstFree   = 0;
-    if (firstActive == firstFree       ) firstActive++;
+    if (firstActive == firstFree) firstActive++;
     if (firstActive == particles.length) firstActive = 0;
   };
   ParticlePool.prototype.update = function(deltaTime) {
@@ -113,14 +114,20 @@ const ParticlePool = (function() {
   
     // update active particles
     if (firstActive < firstFree) {
-      for (let i = firstActive; i < firstFree; i++)
+      for (let i = firstActive; i < firstFree; i++) {
         particles[i].update(deltaTime);
+        if (stopHeart) break;
+      }
     }
     if (firstFree < firstActive) {
-      for (let i = firstActive; i < particles.length; i++)
+      for (let i = firstActive; i < particles.length; i++) {
         particles[i].update(deltaTime);
-      for (let i = 0; i < firstFree; i++)
+        if (stopHeart) break;
+      }
+      for (let i = 0; i < firstFree; i++) {
         particles[i].update(deltaTime);
+        if (stopHeart) break;
+      }
     }
   
     // remove inactive particles
@@ -134,14 +141,20 @@ const ParticlePool = (function() {
   ParticlePool.prototype.draw = function(context, image) {
     // draw active particles
     if (firstActive < firstFree) {
-      for (let i = firstActive; i < firstFree; i++)
+      for (let i = firstActive; i < firstFree; i++) {
         particles[i].draw(context, image);
+        if (stopHeart) break;
+      }
     }
     if (firstFree < firstActive) {
-      for (let i = firstActive; i < particles.length; i++)
+      for (let i = firstActive; i < particles.length; i++) {
         particles[i].draw(context, image);
-      for (let i = 0; i < firstFree; i++)
+        if (stopHeart) break;
+      }
+      for (let i = 0; i < firstFree; i++) {
         particles[i].draw(context, image);
+        if (stopHeart) break;
+      }
     }
   };
   return ParticlePool;
@@ -268,15 +281,17 @@ const ParticlePool = (function() {
   
     // create new particles
     var amount = particleRate * deltaTime;
-    for (var i = 0; i < amount; i++) {
+    for (let i = 0; i < amount; i++) {
       var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
       var dir = pos.clone().length(settings.particles.velocity);
       particlesOuter.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y, settings.particles.effect3);
     }
   
-    // update and draw particles
-    particlesOuter.update(deltaTime);
-    particlesOuter.draw(contextOuter, image());
+    if (!stopHeart) {
+      // update and draw particles
+      particlesOuter.update(deltaTime);
+      particlesOuter.draw(contextOuter, image());
+    }
   }
 
   // handle (re-)sizing of the canvas
@@ -293,4 +308,11 @@ const ParticlePool = (function() {
     render1();
     render2();
   }, 100);
+  setTimeout(() => {
+    stopHeart = true;
+  }, 12000);
+  setTimeout(function() {
+    const board = document.getElementById('pinkboard');
+    board.style.opacity = '0';
+  }, 12000);
 })(document.getElementById('pinkboard'));
