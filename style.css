@@ -5,7 +5,7 @@ body {
 	background: #2c3e50
 }
 
-#wrapper-text {
+.wrapper-text {
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
@@ -14,13 +14,27 @@ body {
 	justify-content: center;
 }
 
-#wrapper-text h1 {
+.wrapper-text #text1 {
 	color: white;
-	font-size: 120px;
+	font-size: 60px;
 	text-align: center;
-	font-family: 'Titan One', cursive;
+	font-family: 'Paytone One', cursive;
 	transform: scale(0);
-	animation: scaleUp 2s 12s ease-in-out forwards, gelatine 1s 14s 3, bounce 2s 17s ease infinite;
+	animation: scaleUp 4s 12s ease-in-out;
+}
+
+.wrapper-text #text2 {
+	color: white;
+	font-size: 60px;
+	text-align: center;
+	font-family: 'Paytone One', cursive;
+	transform: scale(0);
+	animation: scaleUp 4s 16s ease-in-out;
+}
+
+.wrapper-text img {
+	transform: scale(0);
+	animation: scaleUp 2s 20s ease-in-out forwards;
 }
 
 .box {
@@ -69,14 +83,29 @@ body {
 }
 
 @keyframes scaleUp {
-  0% {
-		transform: scale(0);
+	0% {
+	  transform: scale(0);
 	}
 	60% {
-		transform: scale(1.4);
+		transform: scale(1.2);
 	}
 	100% {
-		transform: scale(1);
+		transform: scale(0.8);
+	}
+}
+
+@keyframes scaleUpThenDown {
+  	0% {
+		transform: scale(0);
+	}
+	40% {
+		transform: scale(1.2);
+	}
+	80% {
+		transform: scale(0.8);
+	}
+	100% {
+		transform: scale(0);
 	}
 }
 

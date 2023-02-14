@@ -208,7 +208,7 @@ const ParticlePool = (function() {
     contextVirtual.fillStyle = 'white';
     contextVirtual.font = '16px Arial';
     contextVirtual.textAlign = 'center';
-    contextVirtual.fillText('Lulu', point.x, point.y - 30);
+    contextVirtual.fillText('<3', point.x, point.y - 30);
     // create the image
     const newImage = new Image();
     newImage.src = canvasVirtual.toDataURL();
